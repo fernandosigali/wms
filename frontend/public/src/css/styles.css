@@ -1,3 +1,14 @@
+html {
+    height: 100%;
+}
+
+body {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    height: calc(100% - 16px);
+    position: relative;
+    top: -6px;
+}
+
 .title {
     text-align: center;
 }
@@ -29,17 +40,17 @@
     display: none;
     padding: 56px 18px;
     height: 60%;
-    background-color: darkgray;
+    background-color: rgba(255, 78, 2, 0.8);
     border-radius: 5px;
     text-align: center;
     width: fit-content;
     margin: auto;
     min-width: 535px;
-    box-shadow: 4px 4px 2px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 1px 1px rgba(0, 0, 0, 0.8);
 }
 
 .panel-column {
-    background-color: rgb(239, 239, 239);
+    background-color: #e1e1e1;
     border-radius: 10px;
     margin: 0 8px;
     border-color: black;
@@ -60,10 +71,17 @@
 .inner-att-form {
     margin: 5px 5px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 #move-order-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* width: auto; */
+}
+
+#new-asset-panel {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -78,11 +96,11 @@
 }
 
 label {
-    font-family: Arial, Helvetica, sans-serif;
+    padding-right: 4px;    
 }
 
 input[type="text"], textarea {
-    background-color: rgb(239, 239, 239);
+    background-color: #e1e1e1;
     border-width: 0px 0px 1px 0px;
     border-color: darkgray;
 }
@@ -100,4 +118,36 @@ input:focus {
     width: 64px;
     height: 32px;
     font-size: 14px;
+}
+
+#log-panel {
+    width: calc(100% - 128px);
+    height: fit-content;
+    position: absolute;
+    bottom: 104px;
+    margin: 8px 64px;
+    min-height: 10%;
+    max-height: 88px;
+    border-radius: 5px;
+    display: none;
+}
+
+.log-title {
+    height: 24px;
+    line-height: 24px;
+    font-size: 16px;
+    font-weight: bold;
+    width: calc(100% - 8px);
+    background-color: rgba(255, 78, 2, 0.8);
+    color: white;
+    padding-left: 8px;
+    border-radius: 5px 5px 0 0;
+}
+
+
+.log-body {
+    background-color: #e1e1e1;
+    min-height: 48px;
+    border-radius: 0 0 5px 5px;
+    padding: 8px;
 }

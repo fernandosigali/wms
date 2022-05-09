@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <title>Emulador do WMS</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="../src/css/styles.css">
+    </header>
+    <body>
+        <h1 class="title">Emulador do WMS</h1>
+        <div class="tab-container">
+            <div class="button-container">
+                <button onclick="showPanel(0)" class="tab-button">Login</button>
+                <button onclick="showPanel(1)" class="tab-button">Ordem de movimentação</button>
+                <button onclick="showPanel(2)" class="tab-button">Criação de novos ativos</button>
+            </div>
+            <div class="tab-panel">
+                <div id="login-panel">
+                    <div class="panel-column">
+                        <div class="att-form">
+                            <label class="column-title">Usuário:</label>
+                            <form>
+                                <div class="inner-att-form">
+                                    <label for="login-user">Username: </label>
+                                    <input type="text" id="login-user">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="panel-column">
+                        <div class="att-form">
+                            <label class="column-title">Equipamento:</label>
+                            <form>
+                                <div class="inner-att-form">
+                                    <label for="equip-wms-key">Chave WMS: </label>
+                                    <input type="text" id="equip-wms-key">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="sendRequest(0)" class="sender-button">
+                    Enviar
+                </button> 
+            </div>
+            <div class="tab-panel">
+                <div id="move-order-panel">
+                    <div class="panel-column">
+                        <div class="att-form">
+                            <label class="column-title">Ativo:</label>
+                            <form> 
+                                <div class="inner-att-form">
+                                    <label for="move-order-asset-name">Nome: </label>
+                                    <input type="text" id="move-order-asset-name">
+                                </div>
+                                <div class="inner-att-form">
+                                    <label for="move-order-asset-type">Tipo: </label>
+                                    <input type="text" id="move-order-asset-type">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="panel-column">
+                        <div class="att-form">
+                            <label class="column-title">Destino:</label>
+                            <form>
+                                <div class="inner-att-form">
+                                    <label for="final-yard">Pátio: </label>
+                                    <input type="text" id="final-yard">
+                                </div>
+                                <div class="inner-att-form">
+                                    <label for="final-pack">Pacote: </label>
+                                    <input type="text" id="final-pack">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="panel-column">
+                        <div class="att-form">
+                            <label class="column-title">Origem:</label>
+                            <form>
+                                <div class="inner-att-form">
+                                    <label for="initial-yard">Pátio: </label>
+                                    <input type="text" id="initial-yard">
+                                </div>
+                                <div class="inner-att-form">
+                                    <label for="initial-pack">Pacote: </label>
+                                    <input type="text" id="initial-pack">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="panel-column">
+                        <div class="att-form">
+                            <label class="column-title">Usuário:</label>
+                            <form>
+                                <div class="inner-att-form">
+                                    <label for="move-order-user">Username: </label>
+                                    <input type="text" id="move-order-user">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="sendRequest(1)" class="sender-button">
+                    Enviar
+                </button> 
+            </div>
+            <div class="tab-panel">               
+                <div id="new-asset-panel">
+                    <div class="panel-column">
+                        <div class="att-form">
+                            <label class="column-title">Ativo:</label>
+                            <form>
+                                <div class="inner-att-form">
+                                    <label for="new-asset-asset-name">Nome: </label>
+                                    <input type="text" id="new-asset-asset-name">
+                                </div>
+                                <div class="inner-att-form">
+                                    <label for="new-asset-asset-type">Tipo: </label>
+                                    <input type="text" id="new-asset-asset-type">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="sendRequest(2)" class="sender-button">
+                    Enviar
+                </button> 
+            </div>
+        </div>
+        <div id="log-panel">
+            <div class="log-title">
+                Log
+            </div>
+            <div class="log-body">
+
+            </div>
+        </div>
+    </body>
+    <script src="./main.js"></script>
+</html>
