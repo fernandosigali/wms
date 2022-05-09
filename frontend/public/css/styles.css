@@ -1,0 +1,103 @@
+.title {
+    text-align: center;
+}
+
+.tab-container {
+    width: 100%;
+    text-align: center;
+}
+
+.button-container {
+    width: 100%;
+}
+
+.tab-button {
+    height: 50px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    outline: none;
+    font-size: 16px;
+    border-radius: 5px 5px 0 0;
+}
+
+.tab-button:hover {
+    background-color: darkgrey;
+}
+
+.tab-panel {
+    display: none;
+    padding: 56px 18px;
+    height: 60%;
+    background-color: darkgray;
+    border-radius: 5px;
+    text-align: center;
+    width: fit-content;
+    margin: auto;
+    min-width: 535px;
+    box-shadow: 4px 4px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.panel-column {
+    background-color: rgb(239, 239, 239);
+    border-radius: 10px;
+    margin: 0 8px;
+    border-color: black;
+    border-width: 2px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.column-title {
+    margin-bottom: 16px;
+}
+
+.att-form {
+    padding: 12px 8px;
+    text-align: center;
+    min-width: 270px;
+}
+
+.inner-att-form {
+    margin: 5px 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#move-order-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* width: auto; */
+}
+
+#login-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* width: fit-content; */
+}
+
+label {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input[type="text"], textarea {
+    background-color: rgb(239, 239, 239);
+    border-width: 0px 0px 1px 0px;
+    border-color: darkgray;
+}
+
+input:focus {
+    outline: none;
+    border-width: 0px 0px 2px 0px;
+    border-color: black;
+}
+
+.sender-button {
+    border-radius: 5px;
+    border-color: lightgray;
+    margin: 24px 0px 0px 0px;
+    width: 64px;
+    height: 32px;
+    font-size: 14px;
+}
