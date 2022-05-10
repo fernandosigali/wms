@@ -34,6 +34,7 @@ function getLoginData() {
 }
 
 function getMoveOrderData() {
+    console.log('move order data')
     const assetName = document.getElementById("move-order-asset-name").value;
     const assetType = translateAssetType(document.getElementById("move-order-asset-type").value);
     const asset = {
@@ -48,13 +49,14 @@ function getMoveOrderData() {
         pack: finalPack
     };
     
-    const initialYard = document.getElementById("initial-pack").value;
+    const initialYard = document.getElementById("initial-yard").value;
     const initialPack = document.getElementById("initial-pack").value;
     const initial_position = {
         yard: initialYard,
         pack: initialPack
     } 
     
+    console.log({initial_position})
     const username = document.getElementById("move-order-user").value;
     
     return {
