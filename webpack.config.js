@@ -1,11 +1,10 @@
 const path = require('path');
 
 module.exports = {
-    target: 'node',
-    entry: './frontend/public/src/js/index.js',
+    entry: './app/public/src/js/index.js',
     output: {
         filename: 'main.js',
-        path: path.resolve(__dirname, 'frontend/public/dist')
+        path: path.resolve(__dirname, 'app/public/dist')
     },
     watch: true,
     watchOptions: {

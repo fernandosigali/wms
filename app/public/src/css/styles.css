@@ -46,6 +46,9 @@ body {
     width: fit-content;
     margin: auto;
     min-width: 535px;
+}
+
+.panel-shadow {
     box-shadow: 2px 2px 1px 1px rgba(0, 0, 0, 0.8);
 }
 
@@ -127,7 +130,7 @@ input:focus {
     bottom: 104px;
     margin: 8px 64px;
     min-height: 10%;
-    max-height: 88px;
+    max-height: 256px;
     border-radius: 5px;
     display: none;
 }

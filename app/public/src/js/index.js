@@ -1,7 +1,7 @@
 import axios from 'axios';
-import express from 'express';
+// import express from 'express';
 
-const app = express();
+// const app = express();
 
 const buttons = document.querySelectorAll(".tab-button");
 const tabPanels = document.querySelectorAll(".tab-panel");
@@ -11,7 +11,7 @@ const wmsToken = '12345'
 console.log(buttons)
 console.log(tabPanels)
 
-defaults.headers.common['WMS-Webhook-Token'] = wmsToken;
+axios.defaults.headers.common['WMS-Webhook-Token'] = wmsToken;
 
 function translateAssetType(assetType) {
     assetType = assetType.toLowerCase();
@@ -116,7 +116,7 @@ window.sendRequest = function(tab) {
             console.log('case 0');
             jsonData = getLoginData();
             console.log(jsonData)
-            post(`${apiUrl}/login/`, jsonData)
+            axios.post(`${apiUrl}/login/`, jsonData)
             .then((response) => {
                 console.log(response)
                 printOnLog(response)
@@ -129,7 +129,7 @@ window.sendRequest = function(tab) {
             console.log('case 1');
             jsonData = getMoveOrderData();
             console.log(jsonData)
-            post(`${apiUrl}/instruction/`, jsonData)
+            axios.post(`${apiUrl}/instruction/`, jsonData)
             .then((response) => {
                 console.log(response)
                 printOnLog(response)
@@ -142,7 +142,7 @@ window.sendRequest = function(tab) {
             console.log('case 2');
             jsonData = getNewAssetData();
             console.log(jsonData)
-            post(`${apiUrl}/assets/`, jsonData)
+            axios.post(`${apiUrl}/assets/`, jsonData)
             .then((response) => {
                 console.log(response)
                 printOnLog(response)
