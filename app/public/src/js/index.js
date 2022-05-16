@@ -1,17 +1,40 @@
 import axios from 'axios';
-// import express from 'express';
-
-// const app = express();
+import io from 'socket.io-client';
 
 const buttons = document.querySelectorAll(".tab-button");
 const tabPanels = document.querySelectorAll(".tab-panel");
+const innerAtts = document.querySelectorAll(".inner-att-form")
 const apiUrl = 'http://10.167.1.25:8000/wms'
 const wmsToken = '12345'
+const highlightedColor = "rgb(221, 221, 221)";
+const basicColor = "rgb(188, 188, 188)";
+const wsPort = 3001;
 
 console.log(buttons)
 console.log(tabPanels)
 
 axios.defaults.headers.common['WMS-Webhook-Token'] = wmsToken;
+
+
+innerAtts.forEach((innerAttDiv) => {
+    const input = innerAttDiv.children[1]
+    input.addEventListener('focus', (event) => {
+        const attFormWidth = innerAttDiv.offsetWidth;
+        const labelWidth = innerAttDiv.children[0].offsetWidth;
+        const inputWidth = attFormWidth - labelWidth;
+        const padding = 10;
+
+        input.style.width = `${inputWidth-4-padding}px`;
+    })
+    input.addEventListener('focusout', (event) => {
+        if (input.value === '') {
+           input.style.width = '0px';
+        }
+    })
+    innerAttDiv.addEventListener('click', (event) => {
+        input.focus();
+    })
+})
 
 function translateAssetType(assetType) {
     assetType = assetType.toLowerCase();
@@ -97,15 +120,15 @@ window.showPanel = function(index) {
         tabPanel.style.display = "none";
     })
     buttons.forEach((button) => {
-        button.style.backgroundColor = "rgb(239, 239, 239)"
-        button.style.color = "black";
+        button.style.backgroundColor = basicColor;
         button.style.fontWeight = "lighter";
+        button.style.borderWidth = "0px"
     })
 
     tabPanels[index].style.display = "block";
-    buttons[index].style.background = "rgba(255, 78, 2, 0.8)";
-    buttons[index].style.color = "white";
+    buttons[index].style.background = highlightedColor;
     buttons[index].style.fontWeight = "bold";
+    buttons[index].style.borderWidth = "1px 1px 0 1px"
 }
 
 window.sendRequest = function(tab) {
@@ -153,5 +176,18 @@ window.sendRequest = function(tab) {
             break;
     }
 }
+
+const socket = io.connect(`http://10.167.1.223:${wsPort}`, {
+    withCredentials: true,
+    transports : ['websocket'] 
+});
+
+
+socket.on(('notification'), (data) => {
+    console.log({data});
+    const messagePanel = document.getElementById("notification-message");
+    messagePanel.innerHTML = JSON.stringify(data, undefined, 4);
+})
+
 
 showPanel(0);
