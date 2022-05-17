@@ -59,14 +59,17 @@ body {
 
 .tab-panel {
     /* display: none; */
+    position: absolute;
     padding: 56px 18px;
-    height: 60%;
+    height: fit-content;
     background-color: rgb(221, 221, 221);
     border-radius: 5px;
     text-align: center;
     width: fit-content;
     margin: auto;
     min-width: 650px;
+    overflow: hidden;
+    transition: left 2s cubic-bezier(0.075, 0.82, 0.165, 1);
     /* animation-name: to-left;
     animation-duration: 2s;
     animation-iteration-count: infinite;
@@ -229,3 +232,5 @@ input:focus {
     border-radius: 0 0 5px 5px;
     padding: 8px;
 }
+
+

@@ -36,6 +36,12 @@ innerAttributes.forEach((innerAttDiv) => {
     })
 })
 
+
+window.addEventListener('resize', (event) => {
+    resizeSwiper(selectedPanel);
+})
+
+
 function translateAssetType(assetType) {
     assetType = assetType.toLowerCase();
     if (assetType === "coil" || assetType === 'bobina') {
@@ -126,16 +132,48 @@ function showPanelFirstTime(index) {
     const currentWindowWidth = window.innerWidth;
 
     tabPanels.forEach((panel, nIndex) => {
-        let translateX = `translateX(${nIndex*currentWindowWidth})`;
-        console.log(translateX)
-        panel.style.transform = translateX;
-        console.log(panel)
+        if (nIndex !== index) {
+            panel.style.position = "absolute"
+            let translateX = nIndex*currentWindowWidth;
+            console.log(translateX)
+            panel.style.left = `${translateX}px`;
+            console.log(panel)
+        } else {
+            panel.style.position = "relative"
+            panel.style.marginLeft = "auto";
+        }
     })
-
+    
     buttons[index].style.background = highlightedColor;
     buttons[index].style.textShadow = "1px 0px 0px black";
     buttons[index].style.borderWidth = "1px 1px 0 1px"
 }
+
+
+function resizeSwiper(selectedPanel) {
+    const currentWindowWidth = window.innerWidth;
+    tabPanels.forEach((panel, nIndex) => {
+        const currentMargin = panel.style.left;
+        const currentStyle = window.getComputedStyle(panel, null);
+        const currentLeft = parseInt(currentStyle.left);
+        console.log({currentLeft}) 
+        console.log({currentMargin})
+        const diffIndex = nIndex - selectedPanel;
+        let translateX = diffIndex*currentWindowWidth;
+        panel.style.transition = "none";
+        if (selectedPanel !== nIndex) {
+            console.log(translateX)
+            panel.style.position = "absolute"
+            panel.style.left = `${translateX}px`;
+        } else {
+            panel.style.position = "relative"
+            panel.style.left = `0px`;
+            // panel.style.marginLeft = "auto";
+        }
+        panel.style.transition = "left 2s cubic-bezier(0.075, 0.82, 0.165, 1)";
+    })
+};
+
 
 window.showPanel = function(index) {
 
@@ -145,7 +183,29 @@ window.showPanel = function(index) {
         button.style.borderWidth = "0px"
     })
 
-    tabPanels[selectedPanel].style.display = "none"
+
+    resizeSwiper(index) 
+
+    // tabPanels.forEach((panel, nIndex) => {
+    //     const currentMargin = panel.style.left;
+    //     const currentStyle = window.getComputedStyle(panel, null);
+    //     const currentLeft = parseInt(currentStyle.left);
+    //     console.log({currentLeft}) 
+    //     console.log({currentMargin})
+    //     const diffIndex = nIndex - index;
+    //     let translateX = diffIndex*currentWindowWidth;
+    //     if (index !== nIndex) {
+    //         console.log(translateX)
+    //         panel.style.position = "absolute"
+    //         panel.style.left = `${translateX}px`;
+    //     } else {
+    //         panel.style.position = "relative"
+    //         panel.style.left = `0px`;
+    //         // panel.style.marginLeft = "auto";
+    //     }
+    // })
+
+    // tabPanels[selectedPanel].style.display = "none"
     selectedPanel = index;
     tabPanels[index].style.display = "block";
     buttons[index].style.background = highlightedColor;
