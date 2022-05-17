@@ -122,8 +122,16 @@ function showPanelFirstTime(index) {
         button.style.fontWeight = "lighter";
         button.style.borderWidth = "0px"
     })
+    
+    const currentWindowWidth = window.innerWidth;
 
-    tabPanels[index].style.display = "block";
+    tabPanels.forEach((panel, nIndex) => {
+        let translateX = `translateX(${nIndex*currentWindowWidth})`;
+        console.log(translateX)
+        panel.style.transform = translateX;
+        console.log(panel)
+    })
+
     buttons[index].style.background = highlightedColor;
     buttons[index].style.textShadow = "1px 0px 0px black";
     buttons[index].style.borderWidth = "1px 1px 0 1px"

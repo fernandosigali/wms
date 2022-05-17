@@ -58,7 +58,7 @@ body {
 }
 
 .tab-panel {
-    display: none;
+    /* display: none; */
     padding: 56px 18px;
     height: 60%;
     background-color: rgb(221, 221, 221);
