@@ -3,12 +3,13 @@ import io from 'socket.io-client';
 
 const buttons = document.querySelectorAll(".tab-button");
 const tabPanels = document.querySelectorAll(".tab-panel");
-const innerAtts = document.querySelectorAll(".inner-att-form")
+const innerAttributes = document.querySelectorAll(".inner-att-form")
 const apiUrl = 'http://10.167.1.25:8000/wms'
 const wmsToken = '12345'
 const highlightedColor = "rgb(221, 221, 221)";
 const basicColor = "rgb(188, 188, 188)";
 const wsPort = 3001;
+let selectedPanel = 0;
 
 console.log(buttons)
 console.log(tabPanels)
@@ -16,14 +17,13 @@ console.log(tabPanels)
 axios.defaults.headers.common['WMS-Webhook-Token'] = wmsToken;
 
 
-innerAtts.forEach((innerAttDiv) => {
+innerAttributes.forEach((innerAttDiv) => {
     const input = innerAttDiv.children[1]
     input.addEventListener('focus', (event) => {
         const attFormWidth = innerAttDiv.offsetWidth;
         const labelWidth = innerAttDiv.children[0].offsetWidth;
         const inputWidth = attFormWidth - labelWidth;
         const padding = 10;
-
         input.style.width = `${inputWidth-4-padding}px`;
     })
     input.addEventListener('focusout', (event) => {
@@ -115,10 +115,8 @@ function printOnLog(data) {
     logBody.innerHTML = JSON.stringify(data, null, 4);
 }
 
-window.showPanel = function(index) {
-    tabPanels.forEach((tabPanel) => {
-        tabPanel.style.display = "none";
-    })
+
+function showPanelFirstTime(index) {
     buttons.forEach((button) => {
         button.style.backgroundColor = basicColor;
         button.style.fontWeight = "lighter";
@@ -127,7 +125,23 @@ window.showPanel = function(index) {
 
     tabPanels[index].style.display = "block";
     buttons[index].style.background = highlightedColor;
-    buttons[index].style.fontWeight = "bold";
+    buttons[index].style.textShadow = "1px 0px 0px black";
+    buttons[index].style.borderWidth = "1px 1px 0 1px"
+}
+
+window.showPanel = function(index) {
+
+    buttons.forEach((button) => {
+        button.style.backgroundColor = basicColor;
+        button.style.textShadow = "0px 0px 0px black";
+        button.style.borderWidth = "0px"
+    })
+
+    tabPanels[selectedPanel].style.display = "none"
+    selectedPanel = index;
+    tabPanels[index].style.display = "block";
+    buttons[index].style.background = highlightedColor;
+    buttons[index].style.textShadow = "1px 0px 0px black";
     buttons[index].style.borderWidth = "1px 1px 0 1px"
 }
 
@@ -190,4 +204,4 @@ socket.on(('notification'), (data) => {
 })
 
 
-showPanel(0);
+showPanelFirstTime(selectedPanel);
