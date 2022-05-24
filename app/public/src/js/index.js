@@ -1,14 +1,18 @@
 import axios from 'axios';
-import io from 'socket.io-client';
+
 
 const buttons = document.querySelectorAll(".tab-button");
 const tabPanels = document.querySelectorAll(".tab-panel");
 const innerAttributes = document.querySelectorAll(".inner-att-form")
 const apiUrl = 'http://10.167.1.25:8000/wms'
+const wmsApiUrl = 'http://10.167.1.223:3001'
 const wmsToken = '12345'
-const highlightedColor = "rgb(221, 221, 221)";
+const selectedButtonColor = "rgb(221, 221, 221)";
 const basicColor = "rgb(188, 188, 188)";
-const wsPort = 3001;
+const messagePanelNumber = 4;
+const equip_tag = "EQP-12";
+
+let nonReadedMessage = false;
 let selectedPanel = 0;
 
 console.log(buttons)
@@ -52,8 +56,20 @@ function translateAssetType(assetType) {
     return assetType
 }
 
-function getLoginData() {
-    const username = document.getElementById("login-user").value;
+function getLoginWMSData() {
+    const username = document.getElementById("login-wms-user").value;
+    const password = document.getElementById("login-wms-password").value;
+    
+    const data = {
+        username,
+        password,
+        equip_tag,
+    }
+    return data
+}
+
+function getLoginReqData() {
+    const username = document.getElementById("login-req-user").value;
     const equip_tag = document.getElementById("equip-wms-key").value;
 
     const data = {
@@ -129,13 +145,14 @@ function showPanelFirstTime(index) {
         button.style.borderWidth = "0px"
     })
 
+    const messagePanel = document.getElementById("notification-message");
+    messagePanel.innerHTML = JSON.stringify({
+        "message": "Nenhuma mensagem recebida"
+    }, undefined, 4);
     resizeSwiper(index) 
 
     selectedPanel = index;
-    tabPanels[index].style.display = "block";
-    buttons[index].style.background = highlightedColor;
-    buttons[index].style.textShadow = "1px 0px 0px black";
-    buttons[index].style.borderWidth = "1px 1px 0 1px"
+    selectButton(buttons[index])
 }
 
 
@@ -148,33 +165,51 @@ function resizeSwiper(selectedPanel) {
         const diffIndex = nIndex - selectedPanel;
         let translateX = diffIndex*currentWindowWidth;
         const left = currentWindowWidth/2 - tabPanelWidth/2 - currentBodyMargin;
-        panel.style.transition = "none";
         panel.style.left = `${left + translateX}px`;
-        // if (selectedPanel !== nIndex) {
-        //     panel.style.display = 'block';
-        // } else {
-        //     panel.style.display = 'none';
-        // }
         panel.style.transition = "left 2s cubic-bezier(0.075, 0.82, 0.165, 1)";
     })
 };
 
+function resetButton(button) {
+    button.style.backgroundColor = basicColor;
+    button.style.textShadow = "0px 0px 0px black";
+    button.style.borderWidth = "0px";
+    button.style.borderColor = "darkgray"
+}
+
+function selectButton(button) {
+    button.style.background = selectedButtonColor;
+    button.style.textShadow = "1px 0px 0px black";
+    button.style.borderWidth = "1px 1px 0 1px";
+    button.style.borderColor = "darkgray"
+}
+
+function highlightButton(button) {
+    button.style.transition = 'background 2s cubic-bezier(0.075, 0.82, 0.165, 1), border-color 4s cubic-bezier(0.075, 0.82, 0.165, 1)';
+    button.style.background = 'rgb(162 213 161)';
+    button.style.borderWidth = "1px 1px 1px 1px";
+    // button.style.borderColor = 'rgb(162 213 161)'
+}
 
 window.showPanel = function(index) {
 
-    buttons.forEach((button) => {
-        button.style.backgroundColor = basicColor;
-        button.style.textShadow = "0px 0px 0px black";
-        button.style.borderWidth = "0px"
+    buttons.forEach((button, buttonIndex) => {
+        if (buttonIndex !== messagePanelNumber) {
+            resetButton(button);
+        } else {
+            if (!nonReadedMessage) {
+                resetButton(button)
+            }
+        }
     })
 
     resizeSwiper(index) 
+    if (index === messagePanelNumber) {
+        nonReadedMessage = false;
+    }
 
     selectedPanel = index;
-    tabPanels[index].style.display = "block";
-    buttons[index].style.background = highlightedColor;
-    buttons[index].style.textShadow = "1px 0px 0px black";
-    buttons[index].style.borderWidth = "1px 1px 0 1px"
+    selectButton(buttons[index])
 }
 
 window.sendRequest = function(tab) {
@@ -183,9 +218,9 @@ window.sendRequest = function(tab) {
     switch (tab){
         case 0:
             console.log('case 0');
-            jsonData = getLoginData();
+            jsonData = getLoginWMSData();
             console.log(jsonData)
-            axios.post(`${apiUrl}/login/`, jsonData)
+            axios.post(`${wmsApiUrl}/login/`, jsonData)
             .then((response) => {
                 console.log(response)
                 printOnLog(response)
@@ -196,6 +231,19 @@ window.sendRequest = function(tab) {
             break;
         case 1:
             console.log('case 1');
+            jsonData = getLoginReqData();
+            console.log(jsonData)
+            axios.post(`${apiUrl}/login/`, jsonData)
+            .then((response) => {
+                console.log(response)
+                printOnLog(response)
+            })
+            .catch((err) => {
+                printOnLog(err)
+            })
+            break;
+        case 2:
+            console.log('case 2');
             jsonData = getMoveOrderData();
             console.log(jsonData)
             axios.post(`${apiUrl}/instruction/`, jsonData)
@@ -207,8 +255,8 @@ window.sendRequest = function(tab) {
                 printOnLog(err)
             })
             break;
-        case 2:
-            console.log('case 2');
+        case 3:
+            console.log('case 3');
             jsonData = getNewAssetData();
             console.log(jsonData)
             axios.post(`${apiUrl}/assets/`, jsonData)
@@ -223,17 +271,18 @@ window.sendRequest = function(tab) {
     }
 }
 
-const socket = io.connect(`http://10.167.1.223:${wsPort}`, {
-    withCredentials: true,
-    transports : ['websocket'] 
-});
+const websocket = require('./websocket');
 
-
-socket.on(('notification'), (data) => {
+websocket.socket.on(('notification'), (data) => {
     console.log({data});
     const messagePanel = document.getElementById("notification-message");
     messagePanel.innerHTML = JSON.stringify(data, undefined, 4);
+    if (selectedPanel !== messagePanelNumber) {
+        console.log('Different')
+        console.log(buttons)
+        nonReadedMessage = true;
+        highlightButton(buttons[messagePanelNumber])
+    }
 })
-
 
 showPanelFirstTime(selectedPanel);

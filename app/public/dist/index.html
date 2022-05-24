@@ -16,13 +16,14 @@
 
             <!-- Buttons -->
             <div class="button-container">
-                <button onclick="showPanel(0)" class="tab-button">Login</button>
-                <button onclick="showPanel(1)" class="tab-button">Ordem de movimentação</button>
-                <button onclick="showPanel(2)" class="tab-button">Criação de novos ativos</button>
-                <button onclick="showPanel(3)" class="tab-button">Notificações</button>
+                <button onclick="showPanel(0)" class="tab-button">Login WMS</button>
+                <button onclick="showPanel(1)" class="tab-button">Login Req.</button>
+                <button onclick="showPanel(2)" class="tab-button">Ordem de movimentação</button>
+                <button onclick="showPanel(3)" class="tab-button">Criação de novos ativos</button>
+                <button onclick="showPanel(4)" class="tab-button">Notificações</button>
             </div>
 
-            <!-- Login -->
+            <!-- Login WMS -->
             <div class="tab-panel panel-border">
                 <div id="login-panel">
                     <div class="panel-column">
@@ -32,8 +33,34 @@
                         <div class="att-form">
                             <form>
                                 <div class="inner-att-form">
-                                    <label for="login-user">Username: </label>
-                                    <input type="text" id="login-user">
+                                    <label for="login-wms-user">Username: </label>
+                                    <input type="text" id="login-wms-user">
+                                </div>
+                                <div class="inner-att-form">
+                                    <label for="login-wms-password">Password: </label>
+                                    <input type="password" id="login-wms-password">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="sendRequest(0)" class="sender-button">
+                    Enviar
+                </button> 
+            </div>
+
+            <!-- Login Request -->
+            <div class="tab-panel panel-border">
+                <div id="login-panel">
+                    <div class="panel-column">
+                        <div class="column-title-div top-border-radius">
+                            <label class="column-title">Usuário:</label>
+                        </div>
+                        <div class="att-form">
+                            <form>
+                                <div class="inner-att-form">
+                                    <label for="login-req-user">Username: </label>
+                                    <input type="text" id="login-req-user">
                                 </div>
                             </form>
                         </div>
@@ -52,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-                <button onclick="sendRequest(0)" class="sender-button">
+                <button onclick="sendRequest(1)" class="sender-button">
                     Enviar
                 </button> 
             </div>
@@ -125,7 +152,7 @@
                         </div>
                     </div>
                 </div>
-                <button onclick="sendRequest(1)" class="sender-button">
+                <button onclick="sendRequest(2)" class="sender-button">
                     Enviar
                 </button> 
             </div>
@@ -150,7 +177,7 @@
                         </div>
                     </div>
                 </div>
-                <button onclick="sendRequest(2)" class="sender-button">
+                <button onclick="sendRequest(3)" class="sender-button">
                     Enviar
                 </button> 
             </div>
@@ -164,7 +191,6 @@
                         </div>
                         <div class="att-form">
                             <pre id="notification-message">
-
                             </pre>
                         </div>
                     </div>
