@@ -125,25 +125,14 @@ function printOnLog(data) {
 function showPanelFirstTime(index) {
     buttons.forEach((button) => {
         button.style.backgroundColor = basicColor;
-        button.style.fontWeight = "lighter";
+        button.style.textShadow = "0px 0px 0px black";
         button.style.borderWidth = "0px"
     })
-    
-    const currentWindowWidth = window.innerWidth;
 
-    tabPanels.forEach((panel, nIndex) => {
-        if (nIndex !== index) {
-            panel.style.position = "absolute"
-            let translateX = nIndex*currentWindowWidth;
-            console.log(translateX)
-            panel.style.left = `${translateX}px`;
-            console.log(panel)
-        } else {
-            panel.style.position = "relative"
-            panel.style.marginLeft = "auto";
-        }
-    })
-    
+    resizeSwiper(index) 
+
+    selectedPanel = index;
+    tabPanels[index].style.display = "block";
     buttons[index].style.background = highlightedColor;
     buttons[index].style.textShadow = "1px 0px 0px black";
     buttons[index].style.borderWidth = "1px 1px 0 1px"
@@ -152,24 +141,20 @@ function showPanelFirstTime(index) {
 
 function resizeSwiper(selectedPanel) {
     const currentWindowWidth = window.innerWidth;
+    const currentBodyMargin = parseInt(window.getComputedStyle(document.querySelector("body")).margin);
     tabPanels.forEach((panel, nIndex) => {
-        const currentMargin = panel.style.left;
         const currentStyle = window.getComputedStyle(panel, null);
-        const currentLeft = parseInt(currentStyle.left);
-        console.log({currentLeft}) 
-        console.log({currentMargin})
+        const tabPanelWidth = parseInt(currentStyle.width) + parseInt(currentStyle.paddingLeft)*2;
         const diffIndex = nIndex - selectedPanel;
         let translateX = diffIndex*currentWindowWidth;
+        const left = currentWindowWidth/2 - tabPanelWidth/2 - currentBodyMargin;
         panel.style.transition = "none";
-        if (selectedPanel !== nIndex) {
-            console.log(translateX)
-            panel.style.position = "absolute"
-            panel.style.left = `${translateX}px`;
-        } else {
-            panel.style.position = "relative"
-            panel.style.left = `0px`;
-            // panel.style.marginLeft = "auto";
-        }
+        panel.style.left = `${left + translateX}px`;
+        // if (selectedPanel !== nIndex) {
+        //     panel.style.display = 'block';
+        // } else {
+        //     panel.style.display = 'none';
+        // }
         panel.style.transition = "left 2s cubic-bezier(0.075, 0.82, 0.165, 1)";
     })
 };
@@ -183,29 +168,8 @@ window.showPanel = function(index) {
         button.style.borderWidth = "0px"
     })
 
-
     resizeSwiper(index) 
 
-    // tabPanels.forEach((panel, nIndex) => {
-    //     const currentMargin = panel.style.left;
-    //     const currentStyle = window.getComputedStyle(panel, null);
-    //     const currentLeft = parseInt(currentStyle.left);
-    //     console.log({currentLeft}) 
-    //     console.log({currentMargin})
-    //     const diffIndex = nIndex - index;
-    //     let translateX = diffIndex*currentWindowWidth;
-    //     if (index !== nIndex) {
-    //         console.log(translateX)
-    //         panel.style.position = "absolute"
-    //         panel.style.left = `${translateX}px`;
-    //     } else {
-    //         panel.style.position = "relative"
-    //         panel.style.left = `0px`;
-    //         // panel.style.marginLeft = "auto";
-    //     }
-    // })
-
-    // tabPanels[selectedPanel].style.display = "none"
     selectedPanel = index;
     tabPanels[index].style.display = "block";
     buttons[index].style.background = highlightedColor;

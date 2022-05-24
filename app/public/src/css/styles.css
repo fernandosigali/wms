@@ -8,6 +8,8 @@ body {
     position: relative;
     top: -6px;
     background-color: rgb(221, 221, 221);
+    overflow-x: hidden;
+    margin: 8px;
 }
 
 #title-div {
@@ -70,6 +72,7 @@ body {
     min-width: 650px;
     overflow: hidden;
     transition: left 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
     /* animation-name: to-left;
     animation-duration: 2s;
     animation-iteration-count: infinite;
