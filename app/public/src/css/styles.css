@@ -8,6 +8,8 @@ body {
     position: relative;
     top: -6px;
     background-color: rgb(221, 221, 221);
+    overflow-x: hidden;
+    margin: 8px;
 }
 
 #title-div {
@@ -31,10 +33,13 @@ body {
 .tab-container {
     width: 100%;
     text-align: center;
+    position: relative;
 }
 
 .button-container {
     width: 100%;
+    position: relative;
+    z-index: 10;
 }
 
 .tab-button {
@@ -46,7 +51,7 @@ body {
     font-size: 16px;
     border-radius: 5px 5px 0 0;
     transform: translateY(1px);
-    transition: none
+    transition: transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .tab-button:hover {
@@ -58,25 +63,19 @@ body {
 }
 
 .tab-panel {
-    display: none;
+    position: absolute;
     padding: 56px 18px;
-    height: 60%;
+    height: fit-content;
     background-color: rgb(221, 221, 221);
     border-radius: 5px;
     text-align: center;
     width: fit-content;
     margin: auto;
-    min-width: 650px;
-    /* animation-name: to-left;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    animation-timing-function: steps(500); */
+    min-width: 830px;
+    overflow: hidden;
+    transition: left 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    z-index: 5;
 }
-
-/* @keyframes to-left {
-    0%{transform: none;}
-    100%{transform: translateX(-500px);}  
-} */
 
 .panel-shadow {
     box-shadow: 2px 2px 1px 1px rgba(189, 189, 189, 0.8);
@@ -107,7 +106,7 @@ body {
 
 .column-title {
     margin-bottom: 16px;
-    font-size: 20px;
+    font-size: 24px;
     color: white;
 }
 
@@ -123,11 +122,11 @@ body {
     display: flex;
     justify-content: flex-start;
     border-radius: 5px;
-
+    transition: outline 1s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .inner-att-form:hover {
-    outline: 1px solid darkgray;
+    outline: 1px solid rgb(197, 197, 197);
     outline-offset: -1px;
 }
 
@@ -174,7 +173,7 @@ label {
     padding-right: 4px;    
 }
 
-input[type="text"], textarea {
+input[type="text"], input[type="password"],textarea {
     background-color: #e1e1e1;
     border-width: 0px 0px 0px 0px;
     border-color: darkgray;
@@ -229,3 +228,5 @@ input:focus {
     border-radius: 0 0 5px 5px;
     padding: 8px;
 }
+
+
