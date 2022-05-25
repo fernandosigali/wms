@@ -4,7 +4,8 @@ import io from 'socket.io-client';
 const buttons = document.querySelectorAll(".tab-button");
 const tabPanels = document.querySelectorAll(".tab-panel");
 const innerAttributes = document.querySelectorAll(".inner-att-form")
-const apiUrl = 'http://10.167.1.25:8000/wms'
+// const apiUrl = 'http://10.167.1.25:8000/wms'
+const apiUrl = 'http://192.168.15.7/wms'
 const wmsToken = '12345'
 const highlightedColor = "rgb(221, 221, 221)";
 const basicColor = "rgb(188, 188, 188)";
@@ -191,7 +192,7 @@ window.sendRequest = function(tab) {
     }
 }
 
-const socket = io.connect(`http://10.167.1.223:${wsPort}`, {
+const socket = io.connect(`http://192.168.15.7:${wsPort}`, {
     withCredentials: true,
     transports : ['websocket'] 
 });
