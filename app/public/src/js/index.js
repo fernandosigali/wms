@@ -1,13 +1,13 @@
 import axios from 'axios';
+import { env } from './config'
 
-
+console.log(env)
 const buttons = document.querySelectorAll(".tab-button");
 const tabPanels = document.querySelectorAll(".tab-panel");
 const innerAttributes = document.querySelectorAll(".inner-att-form")
-// const apiUrl = 'http://10.167.1.25:8000/wms'
-const apiUrl = 'http://10.167.1.25:8000/wms'
-const wmsApiUrl = 'http://10.167.1.223:3001'
-const wmsToken = '12345'
+const apiUrl = `${env.rtls.host}:${env.rtls.port}/${env.rtls.endpoint}`;
+const wmsApiUrl = `http://${env.wms.host}:${env.wms.port}`;
+const wmsToken = env.rtls.token;
 const selectedButtonColor = "rgb(221, 221, 221)";
 const basicColor = "rgb(188, 188, 188)";
 const messagePanelNumber = 4;

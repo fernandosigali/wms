@@ -122,7 +122,9 @@ body {
     display: flex;
     justify-content: flex-start;
     border-radius: 5px;
-    transition: outline 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+    outline: 1px solid #e1e1e1;
+    outline-offset: -1px;
+    transition: outline 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .inner-att-form:hover {
